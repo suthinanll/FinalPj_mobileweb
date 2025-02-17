@@ -15,6 +15,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
   
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    *{
+      font-family: kanit;
+    }
     .offcanvas-start {
       z-index: 1050;
     }
@@ -34,6 +39,8 @@
    
   </style>
 </head>
+
+
 
 <body class="bg-gray-100 font-sans">
   <!-- ปุ่มเปิด Sidebar -->
@@ -143,7 +150,7 @@
                   </form>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
                   <button type="submit" class="btn btn-primary" id="createClassButton" disabled>บันทึก</button>
               </div>
           </div>
@@ -164,7 +171,7 @@
                 <img src="./img/programming.jpg" alt="">
                   <div class="p-3">
                   <h3 class="text-lg font-semibold">CS101 - การเขียนโปรแกรมเบื้องต้น</h3>
-                  <p class="text-gray-600 text-sm mb-4">ห้องเรียน: Programming 101</p>
+                  <p class="h-10 text-gray-600 text-sm mb-4">ห้องเรียน: Programming 101</p>
                   <button class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition">
                     เข้าจัดการห้องเรียน
                   </button>
@@ -281,6 +288,19 @@
       </nav>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
