@@ -34,7 +34,7 @@ class App extends React.Component {
             .then((result) => {
                 this.setState({ user: result.user });
                 // เปลี่ยนไปยังที่ต้องการหลังจากล็อกอิน
-                window.location.href = "blank.html"; // ชื่อไฟล์ HTML ที่ต้องการไป
+                window.location.href = "index.html"; // ชื่อไฟล์ HTML ที่ต้องการไป
             })
             .catch((error) => console.error("Login Error:", error));
     }
