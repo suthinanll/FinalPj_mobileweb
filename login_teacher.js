@@ -55,7 +55,7 @@ class App extends React.Component {
                 <Card className="shadow p-5 bg-white rounded" style={{ width: '400px' }}>
                     <Card.Header className="text-center">
                         <Alert variant="info">
-                            <b className="fs-3">Login Page</b>
+                            <b className="fs-3">Login RoomClass</b>
                         </Alert>
                     </Card.Header>
                     <Card.Body>
