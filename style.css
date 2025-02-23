@@ -307,9 +307,12 @@ body {
 }
 
 @media (max-width: 768px) {
-  .sidebar {
+
+
+  .sidebar { 
       transform: translateX(-100%);
       width: 250px;
+     
   }
 
   .sidebar.menu-active {
@@ -353,4 +356,9 @@ body {
 .alert {
   margin-top: 10px;
   display: none;
+}
+
+.sidebar{
+  padding: 0;
+  margin: 0;
 }
