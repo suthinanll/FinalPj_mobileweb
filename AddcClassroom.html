@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    
 
     <!-- Google fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
@@ -18,7 +19,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
-    
+    .navbar {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  padding: 0 20px;
+  font-weight: 600;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 </style>
 <body>
     <nav class="navbar navbar-light">
@@ -50,7 +61,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="./RoomList.html" class="nav-link">
                         <span class="nav-icon material-symbols-rounded">class</span>
                         <span class="nav-label">ห้องเรียน</span>
                     </a>
@@ -74,17 +85,18 @@
                 <input type="text" class="form-control" id="className" placeholder="ชื่อห้องเรียน" required>
                 <input type="text" class="form-control" id="group" placeholder="กลุ่มเรียน" required>
                 <input type="text" class="form-control" id="subject" placeholder="วิชา" required>
-                <input type="text" class="form-control" id="room" placeholder="ห้องเรียน" required>
+                <input type="text" class="form-control" id="room" placeholder="ห้อง" required>
                 <input type="text" class="form-control" id="imageUrl" placeholder="รูปภาพ">
                 <button type="submit" class="btn-submit">เพิ่มห้องเรียน</button>
             </form>
-            <div class="alert alert-success" id="successAlert">เพิ่มห้องสำเร็จ!</div>
+            <div class="alert alert-success" id="successAlert">เพิ่มห้องเรียนสำเร็จ!</div>
             <div class="alert alert-danger" id="errorAlert"></div>
         </div>
     </div>
 
+
     <script>
-        const firebaseConfig = {
+       const firebaseConfig = {
             apiKey: "AIzaSyD3fKnhvyVNEWgE6lmgRtVsBZFSBjJdOOA",
             authDomain: "project-finalmbw.firebaseapp.com",
             projectId: "project-finalmbw",
@@ -94,9 +106,11 @@
             measurementId: "G-MNXL2CMT5S"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // Form submission handler
         document.getElementById('classroomForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -116,12 +130,14 @@
                     createdAt: new Date()
                 });
 
+                // Show success message
                 const successAlert = document.getElementById('successAlert');
                 successAlert.style.display = 'block';
                 setTimeout(() => {
                     successAlert.style.display = 'none';
                 }, 3000);
 
+                // Clear form
                 e.target.reset();
 
             } catch (error) {
@@ -134,11 +150,10 @@
             }
         });
 
-       
     </script>
+
     <script>
-       // Responsive navigation handling
-       const menuToggler = document.querySelector(".menu-toggler");
+      const menuToggler = document.querySelector(".menu-toggler");
         const sidebar = document.querySelector(".sidebar");
 
         menuToggler.addEventListener("click", () => {
@@ -147,7 +162,6 @@
             menuToggler.querySelector("span").innerText = isMenuActive ? "close" : "menu";
         });
 
-        // Close sidebar when clicking outside on mobile
         document.addEventListener("click", (e) => {
             if (window.innerWidth <= 768) {
                 if (!sidebar.contains(e.target) && !menuToggler.contains(e.target)) {
@@ -157,7 +171,6 @@
             }
         });
 
-        // Handle window resize
         window.addEventListener("resize", () => {
             if (window.innerWidth > 768) {
                 sidebar.classList.remove("menu-active");
@@ -165,5 +178,6 @@
             }
         });
     </script>
+    
 </body>
 </html>

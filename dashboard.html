@@ -25,8 +25,17 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <style>
-    
-    
+.navbar {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  padding: 0 20px;
+  font-weight: 600;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 </style>
 <body>
 
@@ -61,7 +70,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="./RoomList.html" class="nav-link">
                     <span class="nav-icon material-symbols-rounded">class</span>
                     <span class="nav-label">ห้องเรียน</span>
                 </a>
@@ -80,15 +89,82 @@
 
      
 
-  <script>
+
   
-  
+   
 
+    <div id="app"></div>
 
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { Container, Card, Spinner } = ReactBootstrap;
 
+        // ตั้งค่า Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD3fKnhvyVNEWgE6lmgRtVsBZFSBjJdOOA",
+            authDomain: "project-finalmbw.firebaseapp.com",
+            projectId: "project-finalmbw",
+            storageBucket: "project-finalmbw.firebasestorage.app",
+            messagingSenderId: "742173296191",
+            appId: "1:742173296191:web:91474e78e2c39275725a8a",
+            measurementId: "G-MNXL2CMT5S"
+        };
 
- 
- 
-  </script>
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // คอมโพเนนต์สำหรับดึงและแสดงห้องเรียน
+        function ClassroomList() {
+            const [classrooms, setClassrooms] = useState([]);
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                const fetchClassrooms = async () => {
+                    try {
+                        const snapshot = await db.collection("classroom").orderBy("createdAt", "desc").get();
+                        const classroomData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        setClassrooms(classroomData);
+                    } catch (error) {
+                        console.error("Error fetching data:", error);
+                    }
+                    setLoading(false);
+                };
+
+                fetchClassrooms();
+            }, []);
+
+            return (
+                <Container className="mt-4">
+                    <h2 className="text-center mb-4">Classroom List</h2>
+                    {loading ? (
+                        <div className="text-center">
+                            <Spinner animation="border" />
+                        </div>
+                    ) : classrooms.length > 0 ? (
+                        classrooms.map(classroom => (
+                            <Card key={classroom.id} className="mb-3 p-3 shadow">
+                                <h4>{classroom.className}</h4>
+                                <p><b>Group:</b> {classroom.group}</p>
+                                <p><b>Subject:</b> {classroom.subject}</p>
+                                <p><b>Room:</b> {classroom.room}</p>
+                                {classroom.imageUrl && <img src={classroom.imageUrl} alt="Classroom" className="img-fluid" />}
+                            </Card>
+                        ))
+                    ) : (
+                        <p className="text-center">No classrooms available.</p>
+                    )}
+                </Container>
+            );
+        }
+
+        function App() {
+            return <ClassroomList />;
+        }
+
+        ReactDOM.createRoot(document.getElementById("app")).render(<App />);
+    </script>
+</body>
+</html>
+
 </body>
 </html>

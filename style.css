@@ -10,6 +10,17 @@ body {
   min-height: 100vh;
   background: linear-gradient(#F1FAFF, #CBE4FF);
 }
+.navbar {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  padding: 0 20px;
+  font-weight: 600;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 .sidebar {
   position: fixed;
   width: 270px;
@@ -199,17 +210,8 @@ body {
   box-sizing: border-box;
 }
 
-.navbar {
-  width: 100%;
-  height: 60px;
-  background-color: white;
-  padding: 0 20px;
-  font-weight: 600;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
+
+
 
 .sidebar {
   position: fixed;
@@ -280,10 +282,7 @@ body {
   margin-right: 10px;
 }
 
-.alert {
-  margin-top: 10px;
-  display: none;
-}
+
 
 .sidebar-toggler, .menu-toggler {
   display: none;
@@ -349,4 +348,9 @@ body {
 }
 .navbar-brand{
   margin-left: 40px;
+}
+
+.alert {
+  margin-top: 10px;
+  display: none;
 }
