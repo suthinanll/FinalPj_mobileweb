@@ -26,153 +26,57 @@
 </head>
 <style>
     
-     .navbar {
-        width: 100%;
-        height: 60px;
-        object-fit: contain;
-        background-color: white;
-        padding-left: 20px;
-        font-weight: 600;
-        
-    }
-
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 250px;
-        
-    }
-
-    .container {
-        margin-left: 260px; 
-       
-    }
-    .navbar-brand{
-        z-index: 1000;
-    }
     
 </style>
 <body>
 
 
     
-  <!-- Navbar -->
-    <nav class="navbar navbar-light d-flex justify-content-between px-3">
-        <a class="navbar-brand" href="#">RoomClass</a>
-        <a href="#" class="nav-link ms-auto">
-            <span class="nav-icon material-symbols-rounded">account_circle</span>
-        </a>
-    </nav>
-    <aside class="sidebar">
-        <!-- Sidebar header -->
-        <header class="sidebar-header">
-          <a href="#" class="header-logo">
-          </a>
-          <button class="toggler sidebar-toggler">
-            <span class="material-symbols-rounded">chevron_left</span>
-          </button>
-          <button class="toggler menu-toggler">
-            <span class="material-symbols-rounded">menu</span>
-          </button>
-        </header>
-        <nav class="sidebar-nav">
-          <!-- Primary top nav -->
-          <ul class="nav-list primary-nav">
+  <nav class="navbar navbar-light">
+    <a class="navbar-brand" href="#">RoomClass</a>
+    <button class="menu-toggler">
+        <span class="material-symbols-rounded">menu</span>
+    </button>
+</nav>
+
+<aside class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav-list primary-nav">
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <span class="nav-icon material-symbols-rounded">home</span>
-                <span class="nav-label">หน้าหลัก</span>
-              </a>
-              <span class="nav-tooltip">หน้าหลัก</span>
+                <a href="./dashboard.html" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">home</span>
+                    <span class="nav-label">หน้าหลัก</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a href="./AddcClassroom.html" class="nav-link">
-                  <span class="nav-icon material-symbols-rounded">add</span>
-                  <span class="nav-label">เพิ่มห้องเรียน</span>
+                    <span class="nav-icon material-symbols-rounded">add</span>
+                    <span class="nav-label">เพิ่มห้องเรียน</span>
                 </a>
-                <span class="nav-tooltip">เพิ่มห้องเรียน</span>
-              </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <span class="nav-icon material-symbols-rounded">list</span>
-                <span class="nav-label">แบบทดสอบ</span>
-              </a>
-              <span class="nav-tooltip">แบบทดสอบ</span>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <span class="nav-icon material-symbols-rounded">class</span>
-                <span class="nav-label">ห้องเรียน</span>
-              </a>
-              <span class="nav-tooltip">ห้องเรียน</span>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">list</span>
+                    <span class="nav-label">แบบทดสอบ</span>
+                </a>
             </li>
-           
-            
-          </ul>
-          <!-- Secondary bottom nav -->
-          <ul class="nav-list secondary-nav">
-           
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <span class="nav-icon material-symbols-rounded">logout</span>
-                <span class="nav-label">Logout</span>
-              </a>
-              <span class="nav-tooltip">Logout</span>
+                <a href="#" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">class</span>
+                    <span class="nav-label">ห้องเรียน</span>
+                </a>
             </li>
-          </ul>
-        </nav>
-
-
-         <!-- ปุ่มเปิด Modal -->
-         
-
-          <!-- Modal -->
-          <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="createClassModalLabel">เพิ่มวิชา</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <!-- เพิ่มวิชา -->
-                <div class="modal-body">
-                  <form id="classForm">
-                    <div class="mb-3">
-                      <label for="className" class="form-label">ชื่อห้องเรียน</label>
-                      <input type="text" class="form-control" id="className" required>
-                    </div>
-
-                    <!-- Section -->
-                    <div class="mb-3">
-                      <label for="section" class="form-label">กลุ่มเรียน</label>
-                      <input type="text" class="form-control" id="section">
-                    </div>
-
-                    <!-- Subject -->
-                    <div class="mb-3">
-                      <label for="subject" class="form-label">วิชา</label>
-                      <input type="text" class="form-control" id="subject">
-                    </div>
-
-                    <!-- Room -->
-                    <div class="mb-3">
-                      <label for="room" class="form-label">ห้อง</label>
-                      <input type="text" class="form-control" id="room">
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ยกเลิก</button>
-                  <button type="submit" class="btn btn-primary" id="createClassButton" disabled>บันทึก</button>
-                </div>
-              </div>
-            </div>
-          </div>
-      </aside>
-
+        </ul>
+        <ul class="nav-list secondary-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">logout</span>
+                    <span class="nav-label">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
 
      
 
@@ -184,94 +88,6 @@
 
 
  
-    const sidebar = document.querySelector(".sidebar");
-    const sidebarToggler = document.querySelector(".sidebar-toggler");
-    const menuToggler = document.querySelector(".menu-toggler");
-
-    // กำหนดค่าความสูงของ sidebar
-    const collapsedSidebarHeight = "56px"; // ความสูงในโหมดมือถือ (ย่อ)
-    const fullSidebarHeight = "calc(100vh - 32px)"; // ความสูงในหน้าจอใหญ่
-
-    // สลับสถานะการย่อ/ขยาย sidebar
-    sidebarToggler.addEventListener("click", () => {
-      sidebar.classList.toggle("collapsed");
-    });
-
-    // ฟังก์ชันอัพเดทความสูงและข้อความปุ่มเมนู
-    const toggleMenu = (isMenuActive) => {
-      sidebar.style.height = isMenuActive ? `${sidebar.scrollHeight}px` : collapsedSidebarHeight;
-      menuToggler.querySelector("span").innerText = isMenuActive ? "close" : "menu";
-    };
-
-    // สลับคลาส menu-active และปรับความสูง
-    menuToggler.addEventListener("click", () => {
-      const isMenuActive = sidebar.classList.toggle("menu-active");
-      toggleMenu(isMenuActive);
-    });
-
-    // ปรับความสูง sidebar เมื่อมีการเปลี่ยนขนาดหน้าจอ
-    window.addEventListener("resize", () => {
-      if (window.innerWidth >= 1024) {
-        sidebar.style.height = fullSidebarHeight;
-      } else {
-        sidebar.classList.remove("collapsed");
-        sidebar.style.height = "auto";
-        toggleMenu(sidebar.classList.contains("menu-active"));
-      }
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-      // ฟังก์ชันสำหรับการสลับหน้า
-      function showPage(pageId) {
-        // ซ่อนทุกหน้า
-        document.querySelectorAll('#app > div').forEach(page => {
-          page.classList.add('hidden');
-        });
-
-        document.getElementById(pageId).classList.remove('hidden');
-      }
-
-      // Navเชื่อมไปอีกหน้า
-      document.getElementById('nav-dashboard').addEventListener('click', function (e) {
-        e.preventDefault();
-        showPage('dashboard');
-        // ปิด sidebar เมื่อกดเมนู
-        var bsOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('offcanvasSidebar'));
-        if (bsOffcanvas) bsOffcanvas.hide();
-      });
-
-      document.getElementById('nav-profile').addEventListener('click', function (e) {
-        e.preventDefault();
-        showPage('edit-profile');
-        var bsOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('offcanvasSidebar'));
-        if (bsOffcanvas) bsOffcanvas.hide();
-      });
-
-      // document.getElementById('nav-add-course').addEventListener('click', function(e) {
-      //   e.preventDefault();
-      //   showPage('add-course');
-      //   var bsOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('offcanvasSidebar'));
-      //   if (bsOffcanvas) bsOffcanvas.hide();
-      // });
-
-      // 
-      document.getElementById('edit-profile-btn').addEventListener('click', function () {
-        showPage('edit-profile');
-      });
-
-      document.getElementById('add-course-btn').addEventListener('click', function () {
-        showPage('add-course');
-      });
-
-      // ปุ่มกลับ
-      document.getElementById('back-from-edit').addEventListener('click', function () {
-        showPage('dashboard');
-      });
-
-      document.getElementById('back-from-add').addEventListener('click', function () {
-        showPage('dashboard');
-      });
-    });
  
   </script>
 </body>
