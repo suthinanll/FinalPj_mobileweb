@@ -211,9 +211,19 @@
             }, []);
     
             // ฟังก์ชันสำหรับเมื่อคลิกที่การ์ดห้องเรียน
+            // const handleCardClick = (classroom) => {
+            //     setSelectedClassroom(classroom); // เก็บข้อมูลห้องเรียนที่เลือก
+            //     setShowModal(true); // เปิด Modal
+            // };
             const handleCardClick = (classroom) => {
-                setSelectedClassroom(classroom); // เก็บข้อมูลห้องเรียนที่เลือก
-                setShowModal(true); // เปิด Modal
+                // ส่งค่าผ่าน URL Parameters
+                const queryParams = new URLSearchParams({
+                    subject: classroom.subject,
+                    className: classroom.className,
+                    imageUrl: classroom.imageUrl
+                }).toString();
+
+                window.location.href = `classroommanage3.html?${queryParams}`;
             };
     
             return (
