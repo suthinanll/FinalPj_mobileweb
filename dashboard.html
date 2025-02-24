@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- เพิ่ม CSS ของ React Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js" crossorigin></script>
     <script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js" crossorigin></script>
@@ -17,6 +19,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode.js/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 <style>
 .navbar {
@@ -53,16 +56,26 @@
 }
 .container {
     margin-left: 235px; 
-    
 }
-
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
 }
-
+/* เพิ่ม style สำหรับ Modal */
+.modal {
+    z-index: 1050 !important;
+}
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+.modal-dialog {
+    margin: 1.75rem auto;
+}
+.modal-content {
+    border-radius: 0.5rem;
+}
 </style>
 <body>
     <nav class="navbar navbar-light">
@@ -114,11 +127,9 @@
     <div id="app"></div>
 
     <script type="text/babel">
-        // ดึง useState, useEffect จาก React และ components ที่ใช้จาก ReactBootstrap
         const { useState, useEffect } = React;
         const { Container, Card, Spinner, Modal, Button } = ReactBootstrap;
     
-        // กำหนดค่า config สำหรับการเชื่อมต่อ Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyD3fKnhvyVNEWgE6lmgRtVsBZFSBjJdOOA",
             authDomain: "project-finalmbw.firebaseapp.com",
@@ -129,44 +140,68 @@
             measurementId: "G-MNXL2CMT5S"
         };
     
-        // เริ่มต้น Firebase ด้วย config ที่กำหนดไว้
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const db = firebase.firestore();
     
-        // ฟังก์ชัน ClassroomModal สำหรับแสดง Modal ที่แสดงรายละเอียดของห้องเรียน
         function ClassroomModal({ classroom, show, onHide }) {
-            // ใช้ useEffect เพื่อสร้าง QR Code ทุกครั้งที่ Modal เปิด
+            console.log("Modal props:", { classroom, show }); // Debug log
+    
             useEffect(() => {
                 if (show && classroom) {
+                    console.log("Generating QR code for:", classroom.id);
                     const qrContainer = document.getElementById(`qr-code-${classroom.id}`);
                     if (qrContainer) {
                         qrContainer.innerHTML = '';
-                        new QRCode(qrContainer, {
-                            text: classroom.cid || 'No room code available', // ใช้รหัสห้องเรียน (cid) หรือข้อความ default
-                            width: 128,
-                            height: 128
-                        });
+                        try {
+                            new QRCode(qrContainer, {
+                                text: classroom.cid || 'No room code available',
+                                width: 128,
+                                height: 128
+                            });
+                        } catch (error) {
+                            console.error("QR Code generation error:", error);
+                        }
                     }
                 }
             }, [show, classroom]);
     
-            if (!classroom) return null; // ถ้าไม่มีข้อมูลห้องเรียน ไม่แสดง Modal
+            if (!classroom) {
+                console.log("No classroom data");
+                return null;
+            }
     
             return (
-                <Modal show={show} onHide={onHide} size="lg" centered>
+                <Modal 
+                    show={show} 
+                    onHide={onHide} 
+                    size="lg" 
+                    centered
+                    backdrop="static"
+                    keyboard={false}
+                >
                     <Modal.Header closeButton>
                         <Modal.Title>{classroom.className}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className="row">
                             <div className="col-md-6">
-                                <h5 >รายละเอียดห้องเรียน</h5>
+                                <h5>รายละเอียดห้องเรียน</h5>
                                 <p><strong>วิชา:</strong> {classroom.subject}</p>
                                 <p><strong>กลุ่มเรียน:</strong> {classroom.group}</p>
                                 <p><strong>ห้อง:</strong> {classroom.room}</p>
                                 <p><strong>รหัสห้อง:</strong> {classroom.cid}</p>
                                 {classroom.imageUrl && (
-                                    <img src={classroom.imageUrl} alt="Classroom" className="img-fluid mb-3" />
+                                    <img 
+                                        src={classroom.imageUrl} 
+                                        alt="Classroom" 
+                                        className="img-fluid mb-3"
+                                        onError={(e) => {
+                                            console.error("Image loading error");
+                                            e.target.style.display = 'none';
+                                        }}
+                                    />
                                 )}
                             </div>
                             <div className="col-md-6">
@@ -179,7 +214,7 @@
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={onHide}>
+                        <Button variant="danger" onClick={onHide}>
                             ปิด
                         </Button>
                     </Modal.Footer>
@@ -187,41 +222,42 @@
             );
         }
     
-        // ฟังก์ชัน ClassroomList สำหรับแสดงรายชื่อห้องเรียนทั้งหมด
         function ClassroomList() {
-            const [classrooms, setClassrooms] = useState([]); // ใช้ useState สำหรับจัดการสถานะของข้อมูลห้องเรียน
-            const [loading, setLoading] = useState(true); // ใช้ useState สำหรับจัดการสถานะโหลดข้อมูล
-            const [selectedClassroom, setSelectedClassroom] = useState(null); // สำหรับเก็บข้อมูลห้องเรียนที่เลือก
-            const [showModal, setShowModal] = useState(false); // ใช้จัดการการแสดงผล Modal
+            const [classrooms, setClassrooms] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const [selectedClassroom, setSelectedClassroom] = useState(null);
+            const [showModal, setShowModal] = useState(false);
     
-            // ใช้ useEffect สำหรับดึงข้อมูลห้องเรียนจาก Firebase เมื่อโหลดหน้า
             useEffect(() => {
                 const fetchClassrooms = async () => {
                     try {
-                        const snapshot = await db.collection("classroom").orderBy("createdAt", "desc").get(); // ดึงข้อมูลห้องเรียนจาก Firestore
-                        const classroomData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); // แปลงข้อมูลห้องเรียนให้เป็นอาร์เรย์
-                        setClassrooms(classroomData); // ตั้งค่าข้อมูลห้องเรียน
+                        console.log("Fetching classrooms...");
+                        const snapshot = await db.collection("classroom").orderBy("createdAt", "desc").get();
+                        const classroomData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        console.log("Fetched classrooms:", classroomData);
+                        setClassrooms(classroomData);
                     } catch (error) {
-                        console.error("Error fetching data:", error); 
+                        console.error("Error fetching data:", error);
+                    } finally {
+                        setLoading(false);
                     }
-                    setLoading(false);
                 };
     
                 fetchClassrooms();
             }, []);
     
-            // ฟังก์ชันสำหรับเมื่อคลิกที่การ์ดห้องเรียน
             const handleCardClick = (classroom) => {
-                setSelectedClassroom(classroom); // เก็บข้อมูลห้องเรียนที่เลือก
-                setShowModal(true); // เปิด Modal
+                console.log("Card clicked:", classroom);
+                setSelectedClassroom(classroom);
+                setShowModal(true);
             };
     
             return (
                 <Container className="mt-5 pt-3">
-                    <h2 className="text-center p-3"></h2>
+                    <h2 className="text-center p-3">ห้องเรียนทั้งหมด</h2>
                     {loading ? (
                         <div className="text-center">
-                            <Spinner animation="border" /> {/* แสดง Spinner เมื่อกำลังโหลดข้อมูล */}
+                            <Spinner animation="border" />
                         </div>
                     ) : (
                         <div className="card-grid">
@@ -229,13 +265,17 @@
                                 <Card 
                                     key={classroom.id} 
                                     className="classroom-card h-100 shadow-sm"
-                                    onClick={() => handleCardClick(classroom)} // เมื่อคลิกที่การ์ดให้แสดง Modal
+                                    onClick={() => handleCardClick(classroom)}
                                 >
                                     {classroom.imageUrl && (
                                         <Card.Img 
                                             variant="top" 
                                             src={classroom.imageUrl} 
-                                            style={{ height: '200px', objectFit: 'cover' }} // แสดงภาพห้องเรียน
+                                            style={{ height: '200px', objectFit: 'cover' }}
+                                            onError={(e) => {
+                                                console.error("Card image loading error");
+                                                e.target.style.display = 'none';
+                                            }}
                                         />
                                     )}
                                     <Card.Body>
@@ -250,46 +290,43 @@
                             ))}
                         </div>
                     )}
-                    {/* เปิด Modal เมื่อเลือกห้องเรียน */}
+                    {console.log("Modal state:", { selectedClassroom, showModal })}
                     <ClassroomModal 
                         classroom={selectedClassroom}
                         show={showModal}
-                        onHide={() => setShowModal(false)} // เมื่อกดปิด Modal
+                        onHide={() => {
+                            console.log("Modal closing");
+                            setShowModal(false);
+                            setSelectedClassroom(null);
+                        }}
                     />
                 </Container>
             );
         }
-
-
-
-
-
-        
     
-        // ฟังก์ชันหลักที่จะทำการเรนเดอร์ ClassroomList
         function App() {
             return <ClassroomList />;
         }
     
-        // ใช้ ReactDOM เพื่อแสดงผลฟังก์ชัน App
         ReactDOM.createRoot(document.getElementById("app")).render(<App />);
     
-        // ฟังก์ชันออกระบบ
+        // Logout functionality
         const auth = firebase.auth();
     
         document.getElementById('logoutButton').addEventListener('click', async (e) => {
             e.preventDefault();
             try {
-                await auth.signOut(); // ออกจากระบบ
+                await auth.signOut();
                 alert("คุณต้องการออกจากระบบหรือไม่?");
-                window.location.href = "index.html"; // เปลี่ยนหน้าไปยังหน้าแรก
+                window.location.href = "index.html";
             } catch (error) {
-                console.error("Logout Error:", error); // ถ้ามีข้อผิดพลาดในการออกจากระบบ
+                console.error("Logout Error:", error);
             }
         });
     </script>
+
     <script>
-      const menuToggler = document.querySelector(".menu-toggler");
+        const menuToggler = document.querySelector(".menu-toggler");
         const sidebar = document.querySelector(".sidebar");
 
         menuToggler.addEventListener("click", () => {
@@ -314,6 +351,5 @@
             }
         });
     </script>
-    
 </body>
 </html>
