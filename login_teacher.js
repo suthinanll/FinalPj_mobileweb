@@ -162,7 +162,7 @@ class App extends React.Component {
   }
 
   logout() {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    const confirmLogout = window.confirm("คุณต้องการออกจากระบบหรือไม่?");
     if (confirmLogout) {
       firebase.auth().signOut()
         .then(() => this.setState({ user: null }))
