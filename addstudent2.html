@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เพิ่มนักศึกษา</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD3fKnhvyVNEWgE6lmgRtVsBZFSBjJdOOA",
+            authDomain: "project-finalmbw.firebaseapp.com",
+            projectId: "project-finalmbw",
+            storageBucket: "project-finalmbw.firebasestorage.app",
+            messagingSenderId: "742173296191",
+            appId: "1:742173296191:web:91474e78e2c39275725a8a",
+            measurementId: "G-MNXL2CMT5S"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("addStudentForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById("name").value;
+                const studentId = document.getElementById("studentId").value;
+                const year = document.querySelector("input[name='year']:checked").value;
+                const branch = document.querySelector("input[name='branch']:checked").value;
+                const collectionName = `${branch}${year}`;
+
+                try {
+                    await addDoc(collection(db, `classroom/YOUR_CID/students`), {
+                        name, studentId, year, branch
+                    });
+                    alert("เพิ่มนักศึกษาเรียบร้อยแล้ว!");
+                    document.getElementById("addStudentForm").reset();
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">เพิ่มรายชื่อนักศึกษา</h2>
+        <form id="addStudentForm">
+            <div class="mb-3">
+                <label class="form-label">ชื่อ-นามสกุล</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">รหัสนักศึกษา</label>
+                <input type="text" id="studentId" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">เลือกชั้นปี</label>
+                <div>
+                    <input type="radio" name="year" value="year1" checked> ปี 1
+                    <input type="radio" name="year" value="year2"> ปี 2
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">เลือกสาขา</label>
+                <div>
+                    <input type="radio" name="branch" value="it" checked> IT
+                    <input type="radio" name="branch" value="cs"> CS
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">เพิ่มนักศึกษา</button>
+        </form>
+    </div>
+</body>
+
+</html>

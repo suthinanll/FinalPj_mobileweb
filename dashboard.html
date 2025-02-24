@@ -246,10 +246,10 @@
                 fetchClassrooms();
             }, []);
     
+            // ฟังก์ชันสำหรับเมื่อคลิกที่การ์ดห้องเรียน
             const handleCardClick = (classroom) => {
-                console.log("Card clicked:", classroom);
-                setSelectedClassroom(classroom);
-                setShowModal(true);
+                setSelectedClassroom(classroom); // เก็บข้อมูลห้องเรียนที่เลือก
+                setShowModal(true); // เปิด Modal
             };
     
             return (
