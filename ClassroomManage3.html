@@ -28,6 +28,17 @@
             border-radius: 10px;
             margin-top: 10px;
         }
+        a:hover{
+            text-decoration: none;
+        }
+        a:link{
+            text-decoration: none;
+            color: white;
+        }
+        a:visited{
+            color: white;
+        }
+        
     </style>
 </head>
 
@@ -46,8 +57,8 @@
             </div>
             <div class="text-center mb-4">
                 <button id="generate-qrcode" class="btn btn-primary me-2">📷 สร้าง QR Code</button>
-                <button id="show-student-list" class="btn btn-secondary me-2">👨‍🎓 แสดงรายชื่อนักเรียน</button>
-                <button id="add-checkin" class="btn btn-success">✅ เพิ่มการเช็คชื่อ</button>
+                <button id="show-student-list" class="btn btn-secondary me-2"> <a href="StudentList2.html">👨‍🎓 แสดงรายชื่อนักศึกษา </a>  </button>
+                <button id="add-checkin" class="btn btn-success"><a href="addstudent2.html">✅ เพิ่มการเช็คชื่อ</a></button>
             </div>
             <h4 class="text-center mt-4">📌 ประวัติการเช็คชื่อ</h4>
             <div class="table-responsive">
@@ -119,6 +130,22 @@
 
         // ปุ่มสร้าง QR Code ใหม่
         document.getElementById('generate-qrcode').addEventListener('click', generateQRCode);
+
+
+        // document.getElementById("show-student-list").addEventListener("click", () => {
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     const cid = urlParams.get("cid"); // ดึงค่า cid จาก URL
+
+        //     if (!cid) {
+        //         alert("ไม่พบรหัสวิชา!");
+        //         return;
+        //     }
+
+        //     window.location.href = `checkinscreen3.html?cid=${cid}`;
+        // });
+
+
+
     </script>
 
 </body>
