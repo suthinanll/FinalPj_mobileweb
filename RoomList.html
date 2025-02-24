@@ -93,6 +93,13 @@
                     <span class="nav-label">Logout</span>
                 </a>
             </li>
+        </ul>  <ul class="nav-list secondary-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="logoutButton">
+                    <span class="nav-icon material-symbols-rounded">logout</span>
+                    <span class="nav-label">Logout</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </aside>
@@ -317,6 +324,20 @@
               menuToggler.querySelector("span").innerText = "menu";
           }
       });
+
+
+      const auth = firebase.auth();
+
+document.getElementById('logoutButton').addEventListener('click', async (e) => {
+    e.preventDefault(); // ป้องกันการโหลดหน้าใหม่
+    try {
+        await auth.signOut(); // Logout ออกจากระบบ
+        alert("คุณต้องการออกจากระบบหรือไม่?");
+        window.location.href = "index.html"; 
+    } catch (error) {
+        console.error("Logout Error:", error);
+    }
+});
   </script>
     
     
